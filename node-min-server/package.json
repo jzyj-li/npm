@@ -7,6 +7,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "jzyj-li",
+  "author": "https://github.com/jzyj-li/npm/tree/master/node-min-server",
   "license": "ISC"
 }
