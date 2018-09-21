@@ -1,0 +1,12 @@
+{
+  "name": "node-min-server",
+  "version": "1.0.0",
+  "description": "node static server",
+  "main": "index.js",
+  "keywords": ["node","server","static","http","proxy"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jzyj-li",
+  "license": "ISC"
+}
