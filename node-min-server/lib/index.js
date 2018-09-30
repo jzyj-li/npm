@@ -27,13 +27,16 @@ class minServer {
         this.proxy = options.proxy;
         this.port = options.port || 2018;
 
-        this.http =this.proxy?new httpClient(this.proxy['/api']):null
+        this.http =this.proxy?new httpClient(this.proxy['/api']):null;
+
     }
 
     server() {
         this.app = http.createServer((req, res) => {
             this.parseRequest(req, res);
         }).listen(this.port)
+
+        console.log(`服务已启动：ip：${ip}, port：${this.port}`)
     }
 
     parseRequest(req, res) {
@@ -58,8 +61,7 @@ class minServer {
     }
 
     readFile(file_name, res) {
-        let filePath = this.static ? (typeof this.static == 'object' ? (this.static[path.extname(file_name).substr(1)]?this.static[path.extname(file_name).substr(1)]:['./']): [this.static]) : logError('静态文件地址未配置');
-
+        let filePath = this.renderFilePath(file_name);
         isExist(filePath, file_name).then(data => {
             this.creteReponse(res, file_name, data)
         }, reject => {
@@ -69,6 +71,15 @@ class minServer {
         })
     }
 
+    renderFilePath (file_name) {
+        let file_path = '', static_path = this.static;
+        if (this.static){
+           file_path =  typeof static_path == 'object'?(static_path[path.extname(file_name).substr(1)]?static_path[path.extname(file_name).substr(1)]:['./']): (file_name.indexOf('.html')>0?['./']:[this.static]);
+        } else {
+            file_path=['./'];
+        }
+        return file_path;
+    }
     creteReponse(res, file_name, data) {
         let extname = path.extname(file_name).substr(1), header;
 
